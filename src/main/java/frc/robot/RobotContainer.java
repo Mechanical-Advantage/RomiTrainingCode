@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
 import frc.robot.subsystems.Drivetrain;
@@ -73,9 +74,9 @@ public class RobotContainer {
     // is scheduled over it.
 
     m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
-    JoystickButton onButton = new JoystickButton(m_controller, 3);
+   // JoystickButton onButton = new JoystickButton(m_controller, 3);
     JoystickButton offButton = new JoystickButton(m_controller, 4);
-    onButton.whenActive(new TurnLedOn(m_onboardIO));
+    // onButton.whenActive(new TurnLedOn(m_onboardIO));
     offButton.whenActive(new TurnLedOff(m_onboardIO));
 
     // Example of how to use the onboard IO
@@ -105,6 +106,6 @@ public class RobotContainer {
    * @return the command to run in teleop
    */
   public Command getArcadeDriveCommand() {
-    return new ArcadeDrive(m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(2));
+    return new ArcadeDriveCutPower(m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(2), () -> m_controller.getRawButton(3) );
   }
 }
