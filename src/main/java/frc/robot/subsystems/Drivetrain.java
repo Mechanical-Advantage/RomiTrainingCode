@@ -43,7 +43,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
-    m_diffDrive.arcadeDrive(xaxisSpeed / 2, zaxisRotate * 2);
+    m_diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
   }
 
   public void resetEncoders() {

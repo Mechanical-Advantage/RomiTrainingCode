@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
 import frc.robot.subsystems.Drivetrain;
@@ -72,7 +73,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Default command is arcade drive. This will run unless another command
     // is scheduled over it.
-    m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
+    m_drivetrain.setDefaultCommand(getArcadeDriveCutPowerCommand());
     ButtonLedOn = new JoystickButton(m_controller, 1);
 
     // Example of how to use the onboard IO
@@ -103,5 +104,10 @@ public class RobotContainer {
    */
   public Command getArcadeDriveCommand() {
     return new ArcadeDrive(m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(2));
+  }
+
+  public Command getArcadeDriveCutPowerCommand() {
+    return new ArcadeDriveCutPower(m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(2),
+        () -> m_controller.getRawButton(1));
   }
 }
