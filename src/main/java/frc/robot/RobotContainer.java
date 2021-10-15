@@ -11,6 +11,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
+import frc.robot.commands.GyroGreenLed;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.OnBoardIO;
 import frc.robot.subsystems.OnBoardIO.ChannelMode;
@@ -33,7 +34,7 @@ import frc.robot.commands.TurnLedOff;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drivetrain = new Drivetrain();
-  private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.INPUT);
+  private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.OUTPUT);
   private JoystickButton ButtonLedOn;
 
   // Assumes a gamepad plugged into channnel 0
@@ -73,7 +74,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Default command is arcade drive. This will run unless another command
     // is scheduled over it.
-    m_drivetrain.setDefaultCommand(getArcadeDriveCutPowerCommand());
+    m_drivetrain.setDefaultCommand(new GyroGreenLed());
     ButtonLedOn = new JoystickButton(m_controller, 1);
 
     // Example of how to use the onboard IO
