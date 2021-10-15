@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.TurnLedOff;
 import frc.robot.commands.TurnLedOn;
+import frc.robot.commands.StartAngle; 
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -106,6 +107,6 @@ public class RobotContainer {
    * @return the command to run in teleop
    */
   public Command getArcadeDriveCommand() {
-    return new ArcadeDriveCutPower(m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(2), () -> m_controller.getRawButton(3) );
+    return new StartAngle(m_drivetrain, m_onboardIO);
   }
 }
