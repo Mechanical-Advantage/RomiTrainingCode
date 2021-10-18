@@ -15,12 +15,12 @@ public class StartAngle extends CommandBase {
   /** Creates a new StartAngle. */
   public StartAngle(Drivetrain drivetrain, OnBoardIO io) {
     this.drivetrain = drivetrain;
-    this.io = io; 
+    this.io = io;
     addRequirements(drivetrain);
     addRequirements(io);
     // Use addRequirements() here to declare subsystem dependencies.
   }
-  
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -32,14 +32,14 @@ public class StartAngle extends CommandBase {
 
     double angle = drivetrain.getGyroAngleZ();
     if (Math.abs(angle) < 5) {
+      io.setRedLed(false);
+      io.setGreenLed(true);
+    } 
+    else {
       io.setGreenLed(false);
       io.setRedLed(true);
     }
-    else {
-      io.setRedLed(false);
-      io.setGreenLed(true);
-    }
-    
+
   }
 
   // Called once the command ends or is interrupted.
