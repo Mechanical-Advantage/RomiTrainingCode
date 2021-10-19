@@ -7,9 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ArcadeDrive;
+//import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
+import frc.robot.commands.GyroOnBoardIOCommand;
 import frc.robot.commands.TurnLedOff;
 import frc.robot.commands.TurnLedOn;
 import frc.robot.subsystems.Drivetrain;
@@ -32,11 +34,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drivetrain = new Drivetrain();
-  private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.INPUT);
+  private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.OUTPUT);
 
   // Assumes a gamepad plugged into channnel 0
   private final Joystick m_controller = new Joystick(0);
-
+  private final JoystickButton OperateAtLowSpeeds = new JoystickButton(m_controller, 6);
   // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -74,6 +76,7 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
     JoystickButton jb = new JoystickButton(m_controller, 1);
     jb.whenActive(new TurnLedOn(m_onboardIO)).whenInactive(new TurnLedOff(m_onboardIO));
+    m_onboardIO.setDefaultCommand(getOnBoardIOCommand());
 
     // Example of how to use the onboard IO
     Button onboardButtonA = new Button(m_onboardIO::getButtonAPressed);
@@ -83,6 +86,10 @@ public class RobotContainer {
     m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
     m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
     SmartDashboard.putData(m_chooser);
+  }
+
+  private Command getOnBoardIOCommand() {
+    return new GyroOnBoardIOCommand(m_onboardIO, m_drivetrain);
   }
 
   /**
@@ -100,6 +107,7 @@ public class RobotContainer {
    * @return the command to run in teleop
    */
   public Command getArcadeDriveCommand() {
-    return new ArcadeDrive(m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(4));
+    return new ArcadeDriveCutPower(m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(4),
+        () -> OperateAtLowSpeeds.get());
   }
 }
