@@ -13,6 +13,7 @@ public class ArcadeDriveCutPower extends CommandBase {
   private final Supplier<Double> m_xaxisSpeedSupplier;
   private final Supplier<Double> m_zaxisRotateSupplier;
   private final Supplier<Boolean> m_cutPowerModeSupplier;
+  
 
   /**
    * Creates a new ArcadeDrive. This command will drive your robot according to
