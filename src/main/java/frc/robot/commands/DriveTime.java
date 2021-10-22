@@ -14,10 +14,11 @@ public class DriveTime extends CommandBase {
   private long m_startTime;
 
   /**
-   * Creates a new DriveTime. This command will drive your robot for a desired speed and time.
+   * Creates a new DriveTime. This command will drive your robot for a desired
+   * speed and time.
    *
    * @param speed The speed which the robot will drive. Negative is in reverse.
-   * @param time How much time to drive in seconds
+   * @param time  How much time to drive in seconds
    * @param drive The drivetrain subsystem on which this command will run
    */
   public DriveTime(double speed, double time, Drivetrain drive) {
@@ -31,19 +32,19 @@ public class DriveTime extends CommandBase {
   @Override
   public void initialize() {
     m_startTime = System.currentTimeMillis();
-    m_drive.arcadeDrive(0, 0);
+    m_drive.ArcadeDriveCutPower(0, 0, false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.arcadeDrive(m_speed, 0);
+    m_drive.ArcadeDriveCutPower(m_speed, 0, false);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.arcadeDrive(0, 0);
+    m_drive.ArcadeDriveCutPower(0, 0, false);
   }
 
   // Returns true when the command should end.

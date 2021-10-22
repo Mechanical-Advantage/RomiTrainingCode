@@ -21,7 +21,7 @@ public class TurnTime extends CommandBase {
    * Creates a new TurnTime.
    *
    * @param speed The speed which the robot will turn. Negative is in reverse.
-   * @param time How much time to turn in seconds
+   * @param time  How much time to turn in seconds
    * @param drive The drive subsystem on which this command will run
    */
   public TurnTime(double speed, double time, Drivetrain drive) {
@@ -35,19 +35,19 @@ public class TurnTime extends CommandBase {
   @Override
   public void initialize() {
     m_startTime = System.currentTimeMillis();
-    m_drive.arcadeDrive(0, 0);
+    m_drive.ArcadeDriveCutPower(0, 0, false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.arcadeDrive(0, m_rotationalSpeed);
+    m_drive.ArcadeDriveCutPower(0, m_rotationalSpeed, false);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.arcadeDrive(0, 0);
+    m_drive.ArcadeDriveCutPower(0, 0, false);
   }
 
   // Returns true when the command should end.
