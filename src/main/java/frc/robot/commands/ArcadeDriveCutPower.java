@@ -44,12 +44,14 @@ public class ArcadeDriveCutPower extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_cutPowerModeSupplier.get()) {
-      m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get() * (1.0 / 2.0), m_zaxisRotateSupplier.get());
-    } else {
-      m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get());
+    double proportionalControl = (m_drivetrain.getGyroAngleZ() - 69) * -0.01;
+    if (Math.abs(proportionalControl) < 0.35 && Math.abs(proportionalControl) > 0.05) {
+      proportionalControl = Math.copySign(0.35, proportionalControl);
     }
-
+    
+    
+    m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get() ,m_zaxisRotateSupplier.get() + proportionalControl);
+    
   }
 
   // Called once the command ends or is interrupted.

@@ -75,6 +75,7 @@ public class RobotContainer {
     // is scheduled over it.
 
     m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
+    m_onboardIO.setDefaultCommand(new StartAngle(m_drivetrain, m_onboardIO));
    // JoystickButton onButton = new JoystickButton(m_controller, 3);
     JoystickButton offButton = new JoystickButton(m_controller, 4);
     // onButton.whenActive(new TurnLedOn(m_onboardIO));
@@ -107,6 +108,7 @@ public class RobotContainer {
    * @return the command to run in teleop
    */
   public Command getArcadeDriveCommand() {
-    return new StartAngle(m_drivetrain, m_onboardIO);
+    return new ArcadeDriveCutPower(m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(4), () -> m_controller.getRawButton(3) );
+    
   }
 }
