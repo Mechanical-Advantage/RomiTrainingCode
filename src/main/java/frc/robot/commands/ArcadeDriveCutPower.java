@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.Supplier;
 
@@ -35,16 +36,20 @@ public class ArcadeDriveCutPower extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
+    double error = 0 - m_drivetrain.getGyroAngleZ();
+    
+
     if (m_cutPowerModeSupplier.get()) {
       m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get() / 2, m_zaxisRotateSupplier.get() / 2);
     } else {
-      m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get());
+      m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), (5 > Math.abs(error) && 0 < Math.abs(error) ? 0 : error * 0.009+(error < 0 ? -.30 : .30 )));
     }
   }
 
