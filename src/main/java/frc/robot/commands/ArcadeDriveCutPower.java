@@ -50,6 +50,8 @@ public class ArcadeDriveCutPower extends CommandBase {
       m_drivetrain.ArcadeDriveCutPower(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get(), false);
     }
 
+    double gyroangle = m_drivetrain.getGyroAngleZ();
+
   }
 
   // Called once the command ends or is interrupted.
