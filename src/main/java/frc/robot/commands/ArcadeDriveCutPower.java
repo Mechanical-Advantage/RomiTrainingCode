@@ -46,6 +46,19 @@ public class ArcadeDriveCutPower extends CommandBase {
   public void execute() {
     double proportionalControl = (m_drivetrain.getGyroAngleZ()) * -0.01;
 
+    int closestMultiple = (int)m_drivetrain.getGyroAngleZ() % 360;
+    if (closestMultiple > 180){
+      while(closestMultiple % 360 == 0) {
+        closestMultiple += 1;
+      }
+    if (closestMultiple <= 180){
+      while(closestMultiple % 360 == 0){
+        closestMultiple -= 1;
+      }
+    }
+    }
+
+
     if (Math.abs(proportionalControl) < 0.35 && Math.abs(proportionalControl) > 0.05) {
       proportionalControl = Math.copySign(0.35, proportionalControl);
     }
@@ -54,7 +67,8 @@ public class ArcadeDriveCutPower extends CommandBase {
       proportionalControl *= -1.0;
     }
 
-    System.out.println(proportionalControl);
+    
+
     m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get() ,m_zaxisRotateSupplier.get() + proportionalControl);
     
   }
