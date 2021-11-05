@@ -36,7 +36,7 @@ public class ArcadeDriveCutPower extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -44,12 +44,13 @@ public class ArcadeDriveCutPower extends CommandBase {
   public void execute() {
 
     double error = 0 - m_drivetrain.getGyroAngleZ();
-    
 
-    if (m_cutPowerModeSupplier.get()) {
-      m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get() / 2, m_zaxisRotateSupplier.get() / 2);
+    double zAxisValue = m_zaxisRotateSupplier.get();
+    if (Math.abs(zAxisValue) > 0.045) {
+      m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), zAxisValue);
     } else {
-      m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), (5 > Math.abs(error) && 0 < Math.abs(error) ? 0 : error * 0.009+(error < 0 ? -.30 : .30 )));
+      m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(),
+          (5 > Math.abs(error) && 0 < Math.abs(error) ? 0 : error * 0.009 + (error < 0 ? -.30 : .30)));
     }
   }
 
