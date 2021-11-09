@@ -14,6 +14,7 @@ public class ArcadeDriveCutPower extends CommandBase {
   private final Supplier<Double> m_xaxisSpeedSupplier;
   private final Supplier<Double> m_zaxisRotateSupplier;
   private final Supplier<Boolean> m_cutPowerModeSupplier;
+  public double setpoint = 0;
 
   /**
    * Creates a new ArcadeDrive. This command will drive your robot according to
@@ -36,21 +37,24 @@ public class ArcadeDriveCutPower extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    double error = 0 - m_drivetrain.getGyroAngleZ();
+
+    double error = setpoint - m_drivetrain.getGyroAngleZ();
 
     double zAxisValue = m_zaxisRotateSupplier.get();
     if (Math.abs(zAxisValue) > 0.045) {
       m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), zAxisValue);
+      setpoint = m_drivetrain.getGyroAngleZ();
     } else {
       m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(),
-          (5 > Math.abs(error) && 0 < Math.abs(error) ? 0 : error * 0.009 + (error < 0 ? -.30 : .30)));
+          (5 > Math.abs(error) && 0 < Math.abs(error) ? 0 : error * 0.003 + (error < 0 ? -.30 : .30)));
     }
   }
 
