@@ -13,7 +13,6 @@ public class ArcadeDriveCutPower extends CommandBase {
   private final Supplier<Double> m_xaxisSpeedSupplier;
   private final Supplier<Double> m_zaxisRotateSupplier;
   private final Supplier<Boolean> m_cutPowerModeSupplier;
-  
 
   /**
    * Creates a new ArcadeDrive. This command will drive your robot according to
@@ -25,10 +24,8 @@ public class ArcadeDriveCutPower extends CommandBase {
    * @param zaxisRotateSuppplier Lambda supplier of rotational speed
    * @param cutPowerModeSupplier
    */
-  public ArcadeDriveCutPower(Drivetrain drivetrain, 
-    Supplier<Double> xaxisSpeedSupplier,
-    Supplier<Double> zaxisRotateSuppplier, 
-    Supplier<Boolean> cutPowerModeSupplier) {
+  public ArcadeDriveCutPower(Drivetrain drivetrain, Supplier<Double> xaxisSpeedSupplier,
+      Supplier<Double> zaxisRotateSuppplier, Supplier<Boolean> cutPowerModeSupplier) {
     m_drivetrain = drivetrain;
     m_xaxisSpeedSupplier = xaxisSpeedSupplier;
     m_zaxisRotateSupplier = zaxisRotateSuppplier;
@@ -44,32 +41,28 @@ public class ArcadeDriveCutPower extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double proportionalControl = (m_drivetrain.getGyroAngleZ()) * -0.01;
+    double setpoint = m_zaxisRotateSupplier.get();
 
-    int closestMultiple = (int)m_drivetrain.getGyroAngleZ() % 360;
-    if (closestMultiple > 180){
-      while(closestMultiple % 360 == 0) {
-        closestMultiple += 1;
-      }
-    if (closestMultiple <= 180){
-      while(closestMultiple % 360 == 0){
-        closestMultiple -= 1;
-      }
-    }
+    if (m_zaxisRotateSupplier.get() > 0.1 || m_zaxisRotateSupplier.get() < -0.1) {
+      setpoint = m_drivetrain.getGyroAngleZ();
     }
 
+    double error = m_drivetrain.getGyroAngleZ() - setpoint;
+    while (error < -180) {
+      error += 360;
+    }
+    while (error > 180) {
+      error -= 360;
+    }
+    double proportionalControl = error * -0.01;
 
     if (Math.abs(proportionalControl) < 0.35 && Math.abs(proportionalControl) > 0.05) {
       proportionalControl = Math.copySign(0.35, proportionalControl);
     }
-    
-    if (Math.abs(m_drivetrain.getGyroAngleZ()) > 180 && Math.abs(m_drivetrain.getGyroAngleZ()) < 360) {
-      proportionalControl *= -1.0;
-    }
 
-    
+    m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get() + proportionalControl);
+    System.out.println(m_zaxisRotateSupplier.get());
 
-    m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get() ,m_zaxisRotateSupplier.get() + proportionalControl);
     
   }
 
