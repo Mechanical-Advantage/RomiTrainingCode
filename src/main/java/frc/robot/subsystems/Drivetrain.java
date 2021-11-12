@@ -43,8 +43,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
-    m_diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate); // Makes the speed 50% and if it's negative then it // inverses.
-                                                      // 1/2 = 0 integer | 1.0/2.0 = 0.5
+    m_diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate); // Makes the speed 50% and if it's negative then it // inverses. 1/2 = 0 integer | 1.0/2.0 = 0.5
   }
 
   public void resetEncoders() {
