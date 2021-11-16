@@ -12,6 +12,8 @@ import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.DrivetrainIO;
+import frc.robot.subsystems.DrivetrainIORomi;
 import frc.robot.subsystems.OnBoardIO;
 import frc.robot.subsystems.OnBoardIO.ChannelMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -33,7 +35,7 @@ import frc.robot.commands.StartAngle;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Drivetrain m_drivetrain = new Drivetrain(new DrivetrainIORomi());
   private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.OUTPUT);
 
   // Assumes a gamepad plugged into channnel 0
@@ -77,9 +79,9 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
     m_onboardIO.setDefaultCommand(new StartAngle(m_drivetrain, m_onboardIO));
    // JoystickButton onButton = new JoystickButton(m_controller, 3);
-    JoystickButton offButton = new JoystickButton(m_controller, 4);
+    // JoystickButton offButton = new JoystickButton(m_controller, 4);
     // onButton.whenActive(new TurnLedOn(m_onboardIO));
-    offButton.whenActive(new TurnLedOff(m_onboardIO));
+    // offButton.whenActive(new TurnLedOff(m_onboardIO));
 
     // Example of how to use the onboard IO
     Button onboardButtonA = new Button(m_onboardIO::getButtonAPressed);
@@ -108,7 +110,7 @@ public class RobotContainer {
    * @return the command to run in teleop
    */
   public Command getArcadeDriveCommand() {
-    return new ArcadeDriveCutPower(m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(4), () -> m_controller.getRawButton(3) );
+    return new ArcadeDrive(m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(4));
     
   }
 }

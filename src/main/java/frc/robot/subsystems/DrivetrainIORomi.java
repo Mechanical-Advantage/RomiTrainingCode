@@ -28,7 +28,7 @@ public class DrivetrainIORomi implements DrivetrainIO {
     /** Drives the robot at the specified percentages (from -1 to 1). */
     public void setOutputs(double leftPercent, double rightPercent) {
         m_leftMotor.set(leftPercent);
-        m_rightMotor.set(rightPercent);
+        m_rightMotor.set(-rightPercent);
     }
 
     /** Resets the encoder values to 0. */

@@ -16,7 +16,6 @@ public class StartAngle extends CommandBase {
   public StartAngle(Drivetrain drivetrain, OnBoardIO io) {
     this.drivetrain = drivetrain;
     this.io = io;
-    addRequirements(drivetrain);
     addRequirements(io);
     // Use addRequirements() here to declare subsystem dependencies.
   }
