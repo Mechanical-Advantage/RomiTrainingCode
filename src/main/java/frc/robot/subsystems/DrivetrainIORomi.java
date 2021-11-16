@@ -17,7 +17,7 @@ public class DrivetrainIORomi implements DrivetrainIO {
     private final Spark m_leftMotor = new Spark(0);
     private final Spark m_rightMotor = new Spark(1);
 
-    public DrivetrainIORomi()
+    public DrivetrainIORomi() {}
     /** Updates an instance of "DrivetrainIOInputs" using sensor data. */
     public void updateInputs(DrivetrainIOInputs inputs) {
         inputs.gyroPositionRadians = Math.toRadians(m_gyro.getAngleZ()); 
@@ -27,7 +27,8 @@ public class DrivetrainIORomi implements DrivetrainIO {
 
     /** Drives the robot at the specified percentages (from -1 to 1). */
     public void setOutputs(double leftPercent, double rightPercent) {
-        
+        m_leftMotor.set(leftPercent);
+        m_rightMotor.set(rightPercent);
     }
 
     /** Resets the encoder values to 0. */
@@ -40,4 +41,5 @@ public class DrivetrainIORomi implements DrivetrainIO {
     public void resetGyro() {
         m_gyro.reset();
     }
+    
 }
