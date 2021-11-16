@@ -11,6 +11,7 @@ import frc.robot.sensors.RomiGyro;
 
 /** Add your docs here. */
 public class DrivetrainIORomi implements DrivetrainIO {  
+    private static final double kCountsPerRevolution = 1440.0;
     private final Spark m_leftMotor = new Spark(0);
     private final Spark m_rightMotor = new Spark(1);
     private final RomiGyro m_gyro = new RomiGyro();
@@ -18,9 +19,9 @@ public class DrivetrainIORomi implements DrivetrainIO {
     private final Encoder m_rightEncoder = new Encoder(6, 7);
 
     public void updateInputs(DrivetrainIOInputs inputs) {
-        inputs.leftPositionRadians = m_leftEncoder.get();
-        inputs.rightPositionRadians = m_rightEncoder.get();
-        inputs.gyroPositionRadians = m_gyro.getAngleZ();
+        inputs.leftPositionRadians = m_leftEncoder.get()* 2*(Math.PI) / kCountsPerRevolution;
+        inputs.rightPositionRadians = m_rightEncoder.get() * 2*(Math.PI) / kCountsPerRevolution; 
+        inputs.gyroPositionRadians = Math.toRadians(m_gyro.getAngleZ());
     }
 
     public void setOutputs(double leftPercent, double rightPercent) {
