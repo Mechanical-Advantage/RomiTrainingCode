@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Spark;
 import frc.robot.sensors.RomiGyro;
 
 /** Add your docs here. */
-public class DrivetrainIORomi implements DrivetrainIO{
+public class DrivetrainIORomi implements DrivetrainIO {
     private final Spark m_leftMotor = new Spark(0);
     private final Spark m_rightMotor = new Spark(1);
     private final Encoder m_leftEncoder = new Encoder(4, 5);
@@ -21,21 +21,22 @@ public class DrivetrainIORomi implements DrivetrainIO{
         m_leftMotor.set(leftPercent);
         m_rightMotor.set(rightPercent);
     }
+
     @Override
     public void resetEncoders() {
         m_leftEncoder.reset();
         m_rightEncoder.reset();
     }
+
     @Override
     public void resetGyro() {
-        m_gyro.reset();   
-    
+        m_gyro.reset();
 
     }
 
     @Override
     public void updateInputs(DrivetrainIOInputs inputs) {
-        inputs.rightPositionRadians = m_rightEncoder.getRaw() / 1440.0 * 2 * Math.PI;   
+        inputs.rightPositionRadians = m_rightEncoder.getRaw() / 1440.0 * 2 * Math.PI;
         inputs.leftPositionRadians = m_leftEncoder.getRaw() / 1440.0 * 2 * Math.PI;
         inputs.gyroPositionRadians = Math.toRadians(m_gyro.getAngleZ());
     }
