@@ -35,19 +35,19 @@ public class TurnTime extends CommandBase {
   @Override
   public void initialize() {
     m_startTime = System.currentTimeMillis();
-    m_drive.ArcadeDriveCutPower(0, 0, false);
+    m_drive.arcadeDrive(0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.ArcadeDriveCutPower(0, m_rotationalSpeed, false);
+    m_drive.arcadeDrive(0, m_rotationalSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.ArcadeDriveCutPower(0, 0, false);
+    m_drive.arcadeDrive(0, 0);
   }
 
   // Returns true when the command should end.

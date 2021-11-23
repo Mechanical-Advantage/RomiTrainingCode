@@ -45,9 +45,9 @@ public class ArcadeDriveCutPower extends CommandBase {
     if (this.cutPowerModeSupplier.get() == true)
 
     {
-      m_drivetrain.ArcadeDriveCutPower(m_xaxisSpeedSupplier.get() * .5, m_zaxisRotateSupplier.get() * .5, true);
+      m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get() * .5, m_zaxisRotateSupplier.get() * .5);
     } else {
-      m_drivetrain.ArcadeDriveCutPower(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get(), false);
+      m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get());
     }
 
     double gyroangle = m_drivetrain.getGyroAngleZ();

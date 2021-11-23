@@ -15,6 +15,8 @@ import frc.robot.commands.GyroOnBoardIOCommand;
 import frc.robot.commands.TurnLedOff;
 import frc.robot.commands.TurnLedOn;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.DrivetrainIO;
+import frc.robot.subsystems.DrivetrainIORomi;
 import frc.robot.subsystems.OnBoardIO;
 import frc.robot.subsystems.OnBoardIO.ChannelMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -33,7 +35,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Drivetrain m_drivetrain = new Drivetrain(new DrivetrainIORomi());
   private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.OUTPUT);
 
   // Assumes a gamepad plugged into channnel 0

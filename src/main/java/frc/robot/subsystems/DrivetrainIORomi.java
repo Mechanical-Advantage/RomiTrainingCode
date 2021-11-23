@@ -16,6 +16,10 @@ public class DrivetrainIORomi implements DrivetrainIO {
     private final Encoder m_rightEncoder = new Encoder(6, 7);
     private final RomiGyro m_gyro = new RomiGyro();
 
+    public DrivetrainIORomi() {
+        m_rightMotor.setInverted(true);
+    }
+
     @Override
     public void setOutputs(double leftPercent, double rightPercent) {
         m_leftMotor.set(leftPercent);
