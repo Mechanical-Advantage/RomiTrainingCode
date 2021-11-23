@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
+import frc.robot.commands.DrivePID;
 import frc.robot.commands.GyroOnBoardIOCommand;
 import frc.robot.commands.TurnLedOff;
 import frc.robot.commands.TurnLedOn;
@@ -100,7 +101,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();
+    return new DrivePID(m_drivetrain, 12);
   }
 
   /**
