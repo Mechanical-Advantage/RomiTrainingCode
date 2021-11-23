@@ -26,7 +26,7 @@ public class DrivetrainIORomi implements DrivetrainIO {
 
     public void setOutputs(double leftPercent, double rightPercent) {
         m_leftMotor.set(leftPercent);
-        m_rightMotor.set(rightPercent);
+        m_rightMotor.set(-rightPercent);
     }
   
     public void resetEncoders() {

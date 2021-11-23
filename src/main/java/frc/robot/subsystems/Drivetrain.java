@@ -24,6 +24,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
+    io.setOutputs(xaxisSpeed + zaxisRotate, xaxisSpeed - zaxisRotate);
   }
 
   public void resetEncoders() {
@@ -39,7 +40,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getAverageDistanceInch() {
-    return 0.0;
+    return (getLeftDistanceInch() + getRightDistanceInch()) / 2;
   }
 
   public double getGyroAngleZ() {
@@ -47,5 +48,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetGyro() {
+    io.resetGyro();
   }
 }
