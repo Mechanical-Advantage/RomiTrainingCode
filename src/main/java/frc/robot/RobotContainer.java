@@ -75,7 +75,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Default command is arcade drive. This will run unless another command
     // is scheduled over it.
-    m_drivetrain.setDefaultCommand(getArcadeDriveCutPowerCommand());
+    m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
     m_onboardIO.setDefaultCommand(new GyroGreenLed(m_onboardIO, m_drivetrain));
 
     ButtonLedOn = new JoystickButton(m_controller, 1);
