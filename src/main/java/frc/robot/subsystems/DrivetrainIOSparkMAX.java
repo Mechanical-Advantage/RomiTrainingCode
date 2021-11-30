@@ -4,8 +4,11 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import org.opencv.core.Mat;
 
 /** Add your docs here. */
 public class DrivetrainIOSparkMAX implements DrivetrainIO {
@@ -13,11 +16,17 @@ public class DrivetrainIOSparkMAX implements DrivetrainIO {
     private final CANSparkMax m_rightLeaderMotor = new CANSparkMax(15, MotorType.kBrushless);
     private final CANSparkMax m_leftFollowerMotor = new CANSparkMax(3, MotorType.kBrushless);
     private final CANSparkMax m_rightFollowerMotor = new CANSparkMax(16, MotorType.kBrushless);
+    private double afterEncoderReduction = 1.0 / ((9.0 / 62.0) * (18.0 / 30.0));
+    private final CANEncoder leftEncoder = m_leftLeaderMotor.getEncoder();
+    private final CANEncoder rightEncoder = m_rightLeaderMotor.getEncoder();
+   
 
     public DrivetrainIOSparkMAX() {
     }
 
     public void updateInputs(DrivetrainIOInputs inputs) {
+        inputs.leftPositionRadians = ((leftEncoder.getPosition() / afterEncoderReduction) * 2 * Math.PI);
+        inputs.rightPositionRadians = ((rightEncoder.getPosition() / afterEncoderReduction) * 2 * Math.PI);
     }
 
     /** Drives the robot at the specified percentages (from -1 to 1). */
