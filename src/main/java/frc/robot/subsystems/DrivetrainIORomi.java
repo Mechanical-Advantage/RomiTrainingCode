@@ -40,8 +40,8 @@ public class DrivetrainIORomi implements DrivetrainIO {
 
     @Override
     public void updateInputs(DrivetrainIOInputs inputs) {
-        inputs.rightPositionRadians = m_rightEncoder.getRaw() / 1440.0 * 2 * Math.PI;
-        inputs.leftPositionRadians = m_leftEncoder.getRaw() / 1440.0 * 2 * Math.PI;
+        inputs.rightPositionRadians = m_rightEncoder.getDistance() / 1440.0 * 2 * Math.PI;
+        inputs.leftPositionRadians = m_leftEncoder.getDistance() / 1440.0 * 2 * Math.PI;
         inputs.gyroPositionRadians = Math.toRadians(m_gyro.getAngleZ());
     }
 }

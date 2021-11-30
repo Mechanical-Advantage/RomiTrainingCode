@@ -29,6 +29,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getAverageDistanceInch() {
+    System.out.println(getLeftDistanceInch());
+    System.out.println(getRightDistanceInch());
     return (getLeftDistanceInch() + getRightDistanceInch()) / 2;
   }
 
