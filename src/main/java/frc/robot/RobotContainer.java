@@ -11,6 +11,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
+import frc.robot.commands.DrivePID;
 import frc.robot.commands.GyroGreenLed;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.DrivetrainIORomi;
@@ -87,7 +88,8 @@ public class RobotContainer {
     ButtonLedOn.whenInactive(new TurnLedOff(m_onboardIO));
 
     // Setup SmartDashboard options
-    m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
+    m_chooser.setDefaultOption("Test PID", new DrivePID(m_drivetrain,10));
+    m_chooser.addOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
     m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
     SmartDashboard.putData(m_chooser);
   }

@@ -4,29 +4,24 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class DrivePID extends CommandBase {
   /** Creates a new DrivePID. */
-  private final double pidTolerance = 0;
-  private final double setpoint = 0;
-  private static final double kP = 0;
+  private final double pidTolerance = 1;
+  private static final double kP = 0.7;
   private static final double kI = 0;
   private static final double kD = 0;
-  private final double speed;
   private final Drivetrain drive;
-  private final double distanceInInches;
   private final PIDController pid = new PIDController(kP, kI, kD);
-  public DrivePID(Drivetrain drive, double distanceInInches, double speed) {
+  public DrivePID(Drivetrain drive, double distanceInInches) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drive);
     this.drive = drive;
-    this.distanceInInches = distanceInInches; 
-    this.speed = speed;
     pid.setTolerance(pidTolerance);
+    pid.setSetpoint(distanceInInches);
   }
 
   // Called when the command is initially scheduled.
@@ -34,13 +29,13 @@ public class DrivePID extends CommandBase {
   public void initialize() {
     pid.reset();
     drive.resetEncoders();
-    pid.setSetpoint(distanceInInches);
+  
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double percentOut = pid.calculate(drive.getAverageDistanceInch(), setpoint);
+    double percentOut = pid.calculate(drive.getAverageDistanceInch());
     drive.arcadeDrive(percentOut, 0);
 
   }
