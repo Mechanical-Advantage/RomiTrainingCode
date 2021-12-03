@@ -10,12 +10,13 @@ import frc.robot.subsystems.Drivetrain;
 
 public class DrivePID extends CommandBase {
   /** Creates a new DrivePID. */
-  private final double pidTolerance = 1;
-  private static final double kP = 0.7;
+  private final double pidTolerance = 0.1;
+  private static final double kP = 0.11;
   private static final double kI = 0;
   private static final double kD = 0;
   private final Drivetrain drive;
   private final PIDController pid = new PIDController(kP, kI, kD);
+
   public DrivePID(Drivetrain drive, double distanceInInches) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drive);
@@ -29,13 +30,18 @@ public class DrivePID extends CommandBase {
   public void initialize() {
     pid.reset();
     drive.resetEncoders();
-  
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double percentOut = pid.calculate(drive.getAverageDistanceInch());
+
+    if (percentOut >= 0.5) {
+      percentOut = 0.5;
+    }
+
     drive.arcadeDrive(percentOut, 0);
 
   }
