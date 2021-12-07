@@ -15,6 +15,7 @@ import frc.robot.commands.DrivePID;
 import frc.robot.commands.GyroOnBoardIOCommand;
 import frc.robot.commands.TurnLedOff;
 import frc.robot.commands.TurnLedOn;
+import frc.robot.commands.TurnPID;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.DrivetrainIO;
 import frc.robot.subsystems.DrivetrainIORomi;
@@ -101,7 +102,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new DrivePID(m_drivetrain, 12);
+    //return new DrivePID(m_drivetrain, 12);
+    return new TurnPID(90, m_drivetrain);
   }
 
   /**
