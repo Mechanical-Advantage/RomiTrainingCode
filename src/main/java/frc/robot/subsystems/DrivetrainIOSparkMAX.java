@@ -4,14 +4,18 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.SPI;
 
 /** Add your docs here. */
 public class DrivetrainIOSparkMAX implements DrivetrainIO {
     private static final int configTimeoutRuntime = 0;
 
+    private final AHRS gyro = new AHRS(SPI.Port.kMXP);
     private final CANSparkMax m_leftLeaderMotor = new CANSparkMax(12, MotorType.kBrushless);
     private final CANSparkMax m_rightLeaderMotor = new CANSparkMax(15, MotorType.kBrushless);
     private final CANSparkMax m_leftFollowerMotor = new CANSparkMax(3, MotorType.kBrushless);
@@ -37,23 +41,40 @@ public class DrivetrainIOSparkMAX implements DrivetrainIO {
         m_rightLeaderMotor.setInverted(reverseOutputRight);
         m_leftLeaderMotor.setInverted(reverseOutputLeft);
         setCANTimeout(configTimeoutRuntime);
+        m_leftLeaderMotor.enableVoltageCompensation(12);
+        m_rightLeaderMotor.enableVoltageCompensation(12);
+        m_leftLeaderMotor.setIdleMode(IdleMode.kBrake);
+        m_leftFollowerMotor.setIdleMode(IdleMode.kBrake);
+        m_rightLeaderMotor.setIdleMode(IdleMode.kBrake);
+        m_rightFollowerMotor.setIdleMode(IdleMode.kBrake);
+        m_leftFollowerMotor.burnFlash();
+        m_leftLeaderMotor.burnFlash();
+        m_rightFollowerMotor.burnFlash();
+        m_rightLeaderMotor.burnFlash();
+        gyro.zeroYaw();
     }
 
     public void updateInputs(DrivetrainIOInputs inputs) {
         inputs.leftPositionRadians = ((leftEncoder.getPosition() / afterEncoderReduction) * 2 * Math.PI);
         inputs.rightPositionRadians = ((rightEncoder.getPosition() / afterEncoderReduction) * 2 * Math.PI);
+        inputs.gyroPositionRadians = Math.toRadians(gyro.getAngle());
     }
 
     /** Drives the robot at the specified percentages (from -1 to 1). */
     public void setOutputs(double leftPercent, double rightPercent) {
+        m_leftLeaderMotor.setVoltage(leftPercent * 12);
+        m_rightLeaderMotor.setVoltage(rightPercent * 12);
     }
 
     /** Resets the encoder values to 0. */
     public void resetEncoders() {
+        leftEncoder.setPosition(0);
+        rightEncoder.setPosition(0);
     }
 
     /** Resets the gyro angle to 0. */
     public void resetGyro() {
+        gyro.zeroYaw();
     }
 
     private void setCANTimeout(int ms) {
