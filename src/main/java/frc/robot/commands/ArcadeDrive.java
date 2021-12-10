@@ -43,14 +43,16 @@ public class ArcadeDrive extends CommandBase {
     if (Math.abs(m_xaxisSpeedSupplier.get()) < 0.05) {
       minimunxSpeed = 0;
     } else {
-      minimunxSpeed = m_xaxisSpeedSupplier.get();
+      minimunxSpeed = Math.copySign(m_xaxisSpeedSupplier.get() * m_xaxisSpeedSupplier.get(), m_xaxisSpeedSupplier.get());
     }
     if (Math.abs(m_zaxisRotateSupplier.get()) < 0.05) {
       minimunzSpeed = 0;
     } else {
-      minimunzSpeed = m_zaxisRotateSupplier.get();
+      minimunzSpeed = Math.abs(m_zaxisRotateSupplier.get()) * m_zaxisRotateSupplier.get();
     }
+
     m_drivetrain.arcadeDrive(minimunxSpeed, minimunzSpeed);
+
   }
 
   // Called once the command ends or is interrupted.

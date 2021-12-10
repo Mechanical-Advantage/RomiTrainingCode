@@ -6,10 +6,11 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DrivePID extends CommandBase {
-  private static final double KP = 0.13;
+  private static final double KP = 0.05;
   private static final double KD = 0;
   private static final double LIMIT = 0.5;
   private static final double TOLERANCE = 0.25;
@@ -43,6 +44,7 @@ public class DrivePID extends CommandBase {
       output = -LIMIT;
     }
     m_drive.arcadeDrive(output, 0);
+    SmartDashboard.putNumber("PositionError", pid.getPositionError());
   }
 
   // Called once the command ends or is interrupted.

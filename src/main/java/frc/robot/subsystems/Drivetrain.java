@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.DrivetrainIO.DrivetrainIOInputs;
 
 public class Drivetrain extends SubsystemBase {
-  private static final double wheelRadiusInch = 1.377955;
+  private static final double wheelRadiusInch = 2.9;
   private final DrivetrainIO drivetrainIO;
   private final DrivetrainIOInputs inputs = new DrivetrainIOInputs();
   /** Creates a new Drivetrain. */
