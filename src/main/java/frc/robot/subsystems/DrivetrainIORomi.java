@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
+
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
@@ -17,6 +19,7 @@ public class DrivetrainIORomi implements DrivetrainIO {
     private final RomiGyro m_gyro = new RomiGyro();
     private final Encoder m_leftEncoder = new Encoder(4, 5);
     private final Encoder m_rightEncoder = new Encoder(6, 7);
+    
 
     public void updateInputs(DrivetrainIOInputs inputs) {
         inputs.leftPositionRadians = m_leftEncoder.get()* 2*(Math.PI) / kCountsPerRevolution;
