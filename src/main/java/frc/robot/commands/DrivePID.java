@@ -10,7 +10,7 @@ import frc.robot.subsystems.Drivetrain;
 
 public class DrivePID extends CommandBase {
   /** Creates a new DrivePID. */
-  private final double pidTolerance = 0.1;
+  private final double pidTolerance = 0.5;
   private static final double kP = 0.11;
   private static final double kI = 0;
   private static final double kD = 0;
@@ -40,6 +40,9 @@ public class DrivePID extends CommandBase {
 
     if (percentOut >= 0.5) {
       percentOut = 0.5;
+    }
+    if (percentOut <= -0.5){
+      percentOut = -0.5;
     }
 
     drive.arcadeDrive(percentOut, 0);

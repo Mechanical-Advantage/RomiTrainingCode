@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.TurnLedOn;
+import frc.robot.commands.TurnPID;
 import frc.robot.commands.TurnLedOff;
 
 /**
@@ -100,7 +101,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();
+    return new AutonomousDistance(m_drivetrain);
   }
 
   /**

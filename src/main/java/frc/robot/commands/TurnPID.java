@@ -10,10 +10,10 @@ import frc.robot.subsystems.Drivetrain;
 
 public class TurnPID extends CommandBase {
   private final double targetAngleDegrees;
-  private final double pidTolerance = 1;
-  private static final double kP = 0.1;
+  private final double pidTolerance = 2;
+  private static final double kP = 0.01;
   private static final double kI = 0;
-  private static final double kD = 0;
+  private static final double kD = 0.0007;
   private final Drivetrain drive;
   private final PIDController pid = new PIDController(kP, kI, kD);
 
