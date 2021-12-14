@@ -4,9 +4,11 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.SPI;
 
 
 /** Add your docs here. */
@@ -17,10 +19,22 @@ public class DrivetrainIOSparkMAX implements DrivetrainIO {
     private final CANSparkMax m_rightFollower = new CANSparkMax(15, MotorType.kBrushless);
     private CANEncoder leftEncoder = m_leftLeader.getEncoder();
     private CANEncoder rightEncoder = m_rightLeader.getEncoder();
+    private AHRS gyro = new AHRS(SPI.Port.kMXP);
+
 
     public DrivetrainIOSparkMAX(){
         m_leftFollower.follow(m_leftLeader);
         m_rightFollower.follow(m_rightLeader);
+        m_leftLeader.restoreFactoryDefaults();
+        m_leftFollower.restoreFactoryDefaults();
+        m_rightLeader.restoreFactoryDefaults();
+        m_rightFollower.restoreFactoryDefaults();
+        m_rightLeader.setInverted(false);
+        m_leftLeader.setInverted(true);
+        m_leftLeader.burnFlash();
+        m_leftFollower.burnFlash();
+        m_rightLeader.burnFlash();
+        m_rightFollower.burnFlash();    
     }
 
     double afterEncoderReduction = 1.0 / ((9.0 / 62.0) * (18.0 / 30.0));
@@ -33,6 +47,7 @@ public class DrivetrainIOSparkMAX implements DrivetrainIO {
 
     @Override
     public void resetGyro() {
+        gyro.reset();
     }
 
     @Override
@@ -45,7 +60,7 @@ public class DrivetrainIOSparkMAX implements DrivetrainIO {
     public void updateInputs(DrivetrainIOInputs inputs) {
         inputs.leftPositionRadians = leftEncoder.getPosition() / afterEncoderReduction * 2 * Math.PI;
         inputs.rightPositionRadians = rightEncoder.getPosition() / afterEncoderReduction * 2 * Math.PI;
-
+        inputs.gyroPositionRadians = gyro.getAngle() * 2 * Math.PI;
     }
     
 }

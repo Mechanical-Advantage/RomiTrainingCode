@@ -89,7 +89,7 @@ public class RobotContainer {
     ButtonLedOn.whenInactive(new TurnLedOff(m_onboardIO));
 
     // Setup SmartDashboard options
-    m_chooser.setDefaultOption("Test PID", new DrivePID(m_drivetrain,10));
+    m_chooser.setDefaultOption("Test PID", new TurnPID(m_drivetrain, 90));
     m_chooser.addOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
     m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
     SmartDashboard.putData(m_chooser);
