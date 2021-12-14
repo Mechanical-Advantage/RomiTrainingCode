@@ -102,8 +102,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    //return new DrivePID(m_drivetrain, 12);
-    return new TurnPID(90, m_drivetrain);
+    // return new DrivePID(m_drivetrain, 12);
+    return new AutonomousDistance(m_drivetrain);
   }
 
   /**

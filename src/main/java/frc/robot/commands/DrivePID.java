@@ -12,7 +12,7 @@ public class DrivePID extends CommandBase {
   private PIDController m_pid = new PIDController(P, I, D);
   private Drivetrain m_drive;
   private double m_distance;
-  private static final double P = .05;
+  private static final double P = .1;
   private static final double I = 0;
   private static final double D = 0;
 
@@ -20,8 +20,10 @@ public class DrivePID extends CommandBase {
   public DrivePID(Drivetrain drive, double distance) {
     m_distance = distance;
     m_drive = drive;
+    m_pid.setTolerance(1);
+    m_pid.setSetpoint(distance);
     addRequirements(drive);
-    // Use addRequirements() here to declare subsystem dependencies.
+    // Use addRequirements() here to decla3re subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -45,6 +47,7 @@ public class DrivePID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_pid.atSetpoint();
+
   }
 }

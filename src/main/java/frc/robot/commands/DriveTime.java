@@ -23,6 +23,7 @@ public class DriveTime extends CommandBase {
    */
   public DriveTime(double speed, double time, Drivetrain drive) {
     m_speed = speed;
+
     m_duration = time * 1000;
     m_drive = drive;
     addRequirements(drive);
