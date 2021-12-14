@@ -5,16 +5,20 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnPID extends CommandBase {
-  private static final double KP = 0.01;
+  private static final double KP = 0.013;
   private static final double KD = 0;
   private static final double TOLERANCE = 2;
+  private static final double TIMELIMIT = 0.5;
   private final Drivetrain m_drive;
   private final double m_degrees;
   private final PIDController pid = new PIDController(KP, 0, KD);
+  private final Timer timer = new Timer();
 
   /** Creates a new TurnPID. */
   public TurnPID(double degrees, Drivetrain drive) {
@@ -29,6 +33,8 @@ public class TurnPID extends CommandBase {
   public void initialize() {
     m_drive.arcadeDrive(0, 0);
     m_drive.resetGyro();
+    timer.start();
+    timer.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,7 +42,7 @@ public class TurnPID extends CommandBase {
   public void execute() {
     double output = pid.calculate(m_drive.getGyroAngleZ(), m_degrees);
     m_drive.arcadeDrive(0, output);
-    System.out.println(output);
+    SmartDashboard.putNumber("TurnError", pid.getPositionError());
   }
 
   // Called once the command ends or is interrupted.
@@ -49,6 +55,9 @@ public class TurnPID extends CommandBase {
   @Override
   public boolean isFinished() {
     double gyroAngle = m_drive.getGyroAngleZ();
-    return Math.abs(gyroAngle) <= m_degrees + TOLERANCE && Math.abs(gyroAngle) >= m_degrees - TOLERANCE;
+    if (Math.abs(pid.getPositionError()) > TOLERANCE) {
+      timer.reset();
+    }
+    return timer.hasElapsed(TIMELIMIT);
   }
 }
