@@ -20,24 +20,34 @@ public class DrivetrainIOSparkMAX implements DrivetrainIO {
     private CANEncoder leftEncoder = m_leftLeader.getEncoder();
     private CANEncoder rightEncoder = m_rightLeader.getEncoder();
     private AHRS gyro = new AHRS(SPI.Port.kMXP);
+    private int smartCurrentLimit = 80;
 
 
     public DrivetrainIOSparkMAX(){
-        m_leftFollower.follow(m_leftLeader);
-        m_rightFollower.follow(m_rightLeader);
         m_leftLeader.restoreFactoryDefaults();
         m_leftFollower.restoreFactoryDefaults();
         m_rightLeader.restoreFactoryDefaults();
         m_rightFollower.restoreFactoryDefaults();
+        m_leftFollower.follow(m_leftLeader);
+        m_rightFollower.follow(m_rightLeader);
         m_rightLeader.setInverted(false);
         m_leftLeader.setInverted(true);
+        m_leftLeader.setSmartCurrentLimit(smartCurrentLimit);
+        m_rightLeader.setSmartCurrentLimit(smartCurrentLimit);
+        m_leftFollower.setSmartCurrentLimit(smartCurrentLimit);
+        m_rightFollower.setSmartCurrentLimit(smartCurrentLimit);
+        m_rightLeader.enableVoltageCompensation(12);
+        m_leftLeader.enableVoltageCompensation(12);
+        m_rightFollower.enableVoltageCompensation(12);
+        m_leftFollower.enableVoltageCompensation(12);
         m_leftLeader.burnFlash();
         m_leftFollower.burnFlash();
         m_rightLeader.burnFlash();
-        m_rightFollower.burnFlash();    
+        m_rightFollower.burnFlash();
     }
 
     double afterEncoderReduction = 1.0 / ((9.0 / 62.0) * (18.0 / 30.0));
+    //Represents physical gear reduction in the drivetrain
 
     @Override
     public void resetEncoders() {
@@ -60,7 +70,7 @@ public class DrivetrainIOSparkMAX implements DrivetrainIO {
     public void updateInputs(DrivetrainIOInputs inputs) {
         inputs.leftPositionRadians = leftEncoder.getPosition() / afterEncoderReduction * 2 * Math.PI;
         inputs.rightPositionRadians = rightEncoder.getPosition() / afterEncoderReduction * 2 * Math.PI;
-        inputs.gyroPositionRadians = gyro.getAngle() * 2 * Math.PI;
+        inputs.gyroPositionRadians = Math.toRadians(gyro.getAngle());
     }
     
 }

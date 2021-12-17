@@ -15,6 +15,7 @@ import frc.robot.commands.DrivePID;
 import frc.robot.commands.GyroGreenLed;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.DrivetrainIORomi;
+import frc.robot.subsystems.DrivetrainIOSparkMAX;
 import frc.robot.subsystems.OnBoardIO;
 import frc.robot.subsystems.OnBoardIO.ChannelMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -36,7 +37,7 @@ import frc.robot.commands.TurnLedOff;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain(new DrivetrainIORomi());
+  private final Drivetrain m_drivetrain = new Drivetrain(new DrivetrainIOSparkMAX());
   private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.OUTPUT);
   private JoystickButton ButtonLedOn;
 
