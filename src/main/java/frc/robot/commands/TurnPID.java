@@ -18,7 +18,7 @@ public class TurnPID extends CommandBase {
   private static final double TIMELIMIT = 0.5;
   private final TunableNumber kP = new TunableNumber("kP");
   private final TunableNumber kD = new TunableNumber("kD");
-  private final double minVelocity = 0.05;
+  private final TunableNumber minVelocity = new TunableNumber("minVelocity");
   private final Drivetrain m_drive;
   private final double m_degrees;
   private final PIDController pid = new PIDController(kP.get(), 0, kD.get());
@@ -30,8 +30,9 @@ public class TurnPID extends CommandBase {
   public TurnPID(double degrees, Drivetrain drive) {
     m_degrees = degrees;
     m_drive = drive;
-    kP.setDefault(0.011);
+    kP.setDefault(0.012);
     kD.setDefault(0.0013);
+    minVelocity.setDefault(0.07);
     addRequirements(drive);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -49,13 +50,13 @@ public class TurnPID extends CommandBase {
   @Override
   public void execute() {
     double output = pid.calculate(m_drive.getGyroAngleZ(), m_degrees);
-    m_drive.arcadeDrive(0, output);
     SmartDashboard.putNumber("TurnError", pid.getPositionError());
-    if (Math.abs(output) < minVelocity) {
-      output = Math.copySign(minVelocity, output);
-    }
+    if (Math.abs(output) < minVelocity.get()) {
+      output = Math.copySign(minVelocity.get(), output);
+    } 
     pid.setP(kP.get());
     pid.setD(kD.get());
+    m_drive.arcadeDrive(0, output);
   }
 
   // Called once the command ends or is interrupted.
