@@ -12,7 +12,9 @@ public class ArcadeDrive extends CommandBase {
   private final Drivetrain m_drivetrain;
   private final Supplier<Double> m_xaxisSpeedSupplier;
   private final Supplier<Double> m_zaxisRotateSupplier;
-
+  private static final double DEADBAND = .1;
+  private double xaxisSpeed;
+  private double zaxisRotate;
   /**
    * Creates a new ArcadeDrive. This command will drive your robot according to the speed supplier
    * lambdas. This command does not terminate.
@@ -38,8 +40,18 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get());
-  }
+    xaxisSpeed=m_xaxisSpeedSupplier.get();
+    zaxisRotate=m_zaxisRotateSupplier.get();
+    if (xaxisSpeed<DEADBAND){
+      xaxisSpeed=0;
+      
+    }
+    if (zaxisRotate<DEADBAND){
+      zaxisRotate=0;
+    }
+    m_drivetrain.arcadeDrive(xaxisSpeed,zaxisRotate);
+  } 
+  
 
   // Called once the command ends or is interrupted.
   @Override
