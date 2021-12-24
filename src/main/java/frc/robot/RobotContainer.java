@@ -11,6 +11,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
+import frc.robot.commands.PointAtTarget;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.DrivetrainIO;
 import frc.robot.subsystems.DrivetrainIORomi;
@@ -90,6 +91,7 @@ public class RobotContainer {
     // Setup SmartDashboard options
     m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
     m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
+    m_chooser.addOption("PointAtTarget", new PointAtTarget(m_drivetrain));
     SmartDashboard.putData(m_chooser);
   }
 
