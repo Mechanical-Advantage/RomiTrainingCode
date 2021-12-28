@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.DrivetrainIO.DrivetrainIOInputs;
 
@@ -20,6 +22,7 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     drivetrainIO.updateInputs(inputs);
+    Logger.getInstance().processInputs("Drivetrain", inputs);
     // This method will be called once per scheduler run
   }
 

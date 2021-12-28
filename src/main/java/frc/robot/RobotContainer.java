@@ -37,7 +37,7 @@ import frc.robot.commands.StartAngle;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain(new DrivetrainIOSparkMAX());
+  private final Drivetrain m_drivetrain;
   private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.OUTPUT);
 
   // Assumes a gamepad plugged into channnel 0
@@ -64,6 +64,12 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
+    if(Robot.isReal()){
+      m_drivetrain = new Drivetrain(new DrivetrainIOSparkMAX());
+    }
+    else{
+      m_drivetrain = new Drivetrain(new DrivetrainIO(){});
+    }
     configureButtonBindings();
   }
 
