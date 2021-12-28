@@ -14,6 +14,5 @@
     "**/.factorypath": true,
     "**/*~": true
   },
-  "wpilib.skipSelectSimulateExtension": true,
   "editor.formatOnSave": true
 }
