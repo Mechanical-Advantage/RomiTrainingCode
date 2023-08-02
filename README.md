@@ -1,3 +1,3 @@
-# FallTraining2021Code
+# RomiTrainingCode
 
-Student code for 2021 fall training with Romi robots. All development should happen on your group's branch, **not master**.
+Student code for software training with Romi robots. All development should happen on your group's branch, **not master**.
