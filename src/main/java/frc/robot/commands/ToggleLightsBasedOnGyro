@@ -1,0 +1,32 @@
+pubilc class ToggleLightsBasedOnGyro extends CommandBase {
+    private final OnBoardIO m_io;
+
+    public ToggleLightsBasedOnGyro(OnBoardIO io) {
+        m_io = io;
+        addRequirements(io);
+    }
+
+    @Override
+    public void excecute() {
+        double gyroAngle = m_io.m_drivetrain.m_gyro.getAngleZ();
+
+        if (Math.abs(gyroAngle) < 5) {
+            setLightsGreen();
+        } else {
+            setLightsRed();
+        }
+
+        System.out.println("Gyro Angle" + gyroAngle);
+    }
+
+    private void setLightsGreen() {
+        m_io.setGreenLed(true);
+        m_io.setRedLed(false);
+    }
+
+    private void setLightsRed() {
+        m_io.setGreenLed(false);
+        m_io.setRedLed(true);
+    }
+}
+

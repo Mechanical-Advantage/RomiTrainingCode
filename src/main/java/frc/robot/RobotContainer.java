@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drivetrain = new Drivetrain();
-  private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.INPUT);
+  private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.INPUT, ChannelMode.INPUT, m_drivetrain);
 
   // Assumes a gamepad plugged into channnel 0
   private final Joystick m_controller = new Joystick(0);
@@ -62,6 +62,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    m_onboardIO.setGreenLed(true);
+    m_onboardIO.setGreenLed(false);
+    m_onboardIO.setRedLed(true);
+    m_onboardIO.setRedLed(false);a
   }
 
   /**
@@ -76,6 +80,7 @@ public class RobotContainer {
     // Default command is arcade drive. This will run unless another command
     // is scheduled over it.
     m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
+    m_onboardIO.setDefaultCommand(new ToggleLightsBasedOnGyro(m_onboardIO));
 
     JoystickButton button1 = new JoystickButton(m_controller, 1);
 
