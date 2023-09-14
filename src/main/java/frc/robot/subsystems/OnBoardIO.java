@@ -11,10 +11,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
- * This class represents the onboard IO of the Romi reference robot. This includes the pushbuttons
+ * This class represents the onboard IO of the Romi reference robot. This
+ * includes the pushbuttons
  * and LEDs.
  *
- * <p>DIO 0 - Button A (input only) DIO 1 - Button B (input) or Green LED (output) DIO 2 - Button C
+ * <p>
+ * DIO 0 - Button A (input only) DIO 1 - Button B (input) or Green LED (output)
+ * DIO 2 - Button C
  * (input) or Red LED (output) DIO 3 - Yellow LED (output only)
  */
 public class OnBoardIO extends SubsystemBase {
@@ -24,6 +27,7 @@ public class OnBoardIO extends SubsystemBase {
   // DIO 1
   private DigitalInput m_buttonB;
   private DigitalOutput m_greenLed;
+  public final Drivetrain m_drivetrain;
 
   // DIO 2
   private DigitalInput m_buttonC;
@@ -43,7 +47,10 @@ public class OnBoardIO extends SubsystemBase {
    * @param dio1 Mode for DIO 1 (input = Button B, output = green LED)
    * @param dio2 Mode for DIO 2 (input = Button C, output = red LED)
    */
-  public OnBoardIO(ChannelMode dio1, ChannelMode dio2) {
+
+  public OnBoardIO(ChannelMode dio1, ChannelMode dio2, Drivetrain drivetrain) {
+    m_drivetrain = drivetrain;
+
     if (dio1 == ChannelMode.INPUT) {
       m_buttonB = new DigitalInput(1);
     } else {

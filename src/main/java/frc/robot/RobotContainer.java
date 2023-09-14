@@ -8,8 +8,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ArcadeDriveCutPower;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
+import frc.robot.commands.ToggleLightsBasedOnGyro;
 import frc.robot.commands.TurnLedOff;
 import frc.robot.commands.TurnLedOn;
 import frc.robot.subsystems.Drivetrain;
@@ -34,7 +36,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drivetrain = new Drivetrain();
-  private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.INPUT);
+  private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.OUTPUT, ChannelMode.OUTPUT, m_drivetrain);
 
   // Assumes a gamepad plugged into channnel 0
   private final Joystick m_controller = new Joystick(0);
@@ -62,6 +64,11 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    m_onboardIO.setGreenLed(true);
+    m_onboardIO.setGreenLed(false);
+    m_onboardIO.setRedLed(true);
+    m_onboardIO.setRedLed(false);
+
   }
 
   /**
@@ -76,6 +83,7 @@ public class RobotContainer {
     // Default command is arcade drive. This will run unless another command
     // is scheduled over it.
     m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
+    m_onboardIO.setDefaultCommand(new ToggleLightsBasedOnGyro(m_onboardIO));
 
     // define the button for JoyStick to press to turn LED on/off
     JoystickButton button1 = new JoystickButton(m_controller, 1);
@@ -110,7 +118,8 @@ public class RobotContainer {
    * @return the command to run in teleop
    */
   public Command getArcadeDriveCommand() {
-    return new ArcadeDrive(
-        m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(2));
+    return new ArcadeDriveCutPower(
+        m_drivetrain, () -> -m_controller.getRawAxis(1), () -> m_controller.getRawAxis(4),
+        () -> m_controller.getRawButton(6));
   }
 }
