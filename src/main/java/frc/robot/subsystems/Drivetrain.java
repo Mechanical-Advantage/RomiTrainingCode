@@ -29,7 +29,7 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDrive m_diffDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
 
   // Set up the RomiGyro
-  private final RomiGyro m_gyro = new RomiGyro();
+  public final RomiGyro m_gyro = new RomiGyro();
 
   // Set up the BuiltInAccelerometer
   private final BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer();
