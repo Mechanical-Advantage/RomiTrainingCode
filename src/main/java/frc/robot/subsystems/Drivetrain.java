@@ -50,6 +50,16 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
     m_diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
   }
+/* 
+    m_diffDrive.ArcadeDriveCutPower(xaxisSpeed, zaxisRotate, cutPowerModeSupplier);
+  }
+
+  public void ArcadeDriveCutPower extends arcadeDrive(double xaxisSpeed, double zaxisRotate, Boolean cutPowerModeSupplier) {
+    if (cutPowerModeSupplier = true) {
+       xaxisSpeed = xaxisSpeed/2;
+
+    } 
+  } */
 
   public void resetEncoders() {
     m_leftEncoder.reset();
