@@ -14,10 +14,12 @@ public class ToggleLightsBasedOnGyro extends CommandBase {
   public ToggleLightsBasedOnGyro(OnBoardIO io) {
     m_io = io;
     addRequirements(io);
+    if (getRequirements().contains(io)) {
+      System.out.println("Subsystem found");
+    } else {
+      System.out.println("Subsystem.not found");
+    }
     // Use addRequirements() here to declare subsystem dependencies.
-  }
-
-  private void addRequirements(OnBoardIO io) {
   }
 
   // Called when the command is initially scheduled.
@@ -40,11 +42,13 @@ public class ToggleLightsBasedOnGyro extends CommandBase {
   }
 
   private void setLightsGreen() {
+    System.out.println("in set light green");
     m_io.setGreenLed(true);
     m_io.setRedLed(false);
   }
 
   private void setLightsRed() {
+    System.out.println("in set light red");
     m_io.setGreenLed(false);
     m_io.setRedLed(true);
   }
