@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.OnBoardIO;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -30,9 +31,9 @@ public class ToggleLightsBasedOnGyro extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double gyroAngle = m_io.m_drivetrain.m_gyro.getAngleZ();
+    double gyroAngle = m_io.getDrivetrain().getGyroAngleZ();
 
-    if (Math.abs(gyroAngle) < 5) {
+    if (Math.abs(gyroAngle) < Constants.IS_ORIENTED_STRAIGHT_DEGREE_THRESHOLD) {
       setLightsGreen();
     }
 
