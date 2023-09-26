@@ -17,6 +17,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
+    public static final double GYRO_ADJUST_SCALE_COEFFICIENT = .01;
     public static final double IS_ORIENTED_STRAIGHT_DEGREE_THRESHOLD = 5;
+    public static final double Z_AXIS_ROTATE_DEADBAND_VALUE = -0.091;
 }
