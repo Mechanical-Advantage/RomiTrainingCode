@@ -43,13 +43,11 @@ public class ToggleLightsBasedOnGyro extends CommandBase {
   }
 
   private void setLightsGreen() {
-    System.out.println("in set light green");
     m_io.setGreenLed(true);
     m_io.setRedLed(false);
   }
 
   private void setLightsRed() {
-    System.out.println("in set light red");
     m_io.setGreenLed(false);
     m_io.setRedLed(true);
   }
