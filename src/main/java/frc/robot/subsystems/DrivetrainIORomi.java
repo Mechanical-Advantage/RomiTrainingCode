@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.romi.RomiGyro;
 
 /** Defines the interface for communicating with drivetrain hardware. */
-public interface DrivetrainIORomi {
+public class DrivetrainIORomi implements DrivetrainIO {
     /** Contains all of the input data received from drivetrain hardware. */
     public class DrivetrainIOInputs {
         public double leftPositionRadians = 0.0;
@@ -16,43 +16,35 @@ public interface DrivetrainIORomi {
         public double gyroPositionRadians = 0.0;
     }
 
-    /**
-     * Updates an instance of "DrivetrainIOInputs" using sensor data.
-     */
+    private DrivetrainIOInputs m_DrivetrainIOInputs;
+    private Encoder m_gyro;
 
-    public static int getLeftEncoderCount() {
-        return m_leftEncoder.get();
-    }
-
-    public static int getRightEncoderCount() {
-        return m_rightEncoder.get();
-    }
-
-    public default void updateInputs(DrivetrainIOInputs inputs) {
-        getLeftEncoderCount();
-        getRightEncoderCount();
-        m_gyro.getAngleX();
+    /** Updates an instance of "DrivetrainIOInputs" using sensor data. */
+    public void updateInputs(DrivetrainIOInputs inputs) {
+        m_DrivetrainIOInputs.leftPositionRadians = inputs.leftPositionRadians;
+        m_DrivetrainIOInputs.rightPositionRadians = inputs.rightPositionRadians;
+        m_DrivetrainIOInputs.gyroPositionRadians = inputs.gyroPositionRadians;
     }
 
     /** Drives the robot at the specified percentages (from -1 to 1). */
-    public default void setOutputs(double leftPercent, double rightPercent) {
+    public void setOutputs(double leftPercent, double rightPercent) {
         leftPercent = 1;
         rightPercent = 1;
     }
 
-    /** Resets the encoder values to 0. */
-    final Encoder m_leftEncoder = new Encoder(4, 5);
-    final Encoder m_rightEncoder = new Encoder(6, 7);
-
-    public default void resetEncoders() {
+    /**
+     * Resets the encoder values to 0.
+     * 
+     * @param m_leftEncoder
+     * @param m_rightEncoder
+     */
+    public void resetEncoders(Encoder m_leftEncoder, Encoder m_rightEncoder) {
         m_leftEncoder.reset();
         m_rightEncoder.reset();
     }
 
     /** Resets the gyro angle to 0. */
-    public final RomiGyro m_gyro = new RomiGyro();
-
-    public default void resetGyro() {
+    public void resetGyro() {
         m_gyro.reset();
     }
 }
