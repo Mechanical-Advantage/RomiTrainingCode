@@ -5,17 +5,25 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.DrivetrainIO.DrivetrainIOInputs;
 
 public class Drivetrain extends SubsystemBase {
+  private Drivetrain m_diffDrive;
+  private DrivetrainIO m_drivetrainIO;
+  private static DrivetrainIOInputs m_DrivetrainIOInputs = new DrivetrainIOInputs();
+
   /** Creates a new Drivetrain. */
   public Drivetrain(DrivetrainIO io) {
-
+    m_drivetrainIO = io;
   }
 
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
+
   }
 
   public void resetEncoders() {
+
   }
 
   public double getLeftDistanceInch() {
@@ -35,6 +43,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetGyro() {
+
   }
 
   @Override

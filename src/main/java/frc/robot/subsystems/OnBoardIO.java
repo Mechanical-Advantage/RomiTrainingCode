@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class OnBoardIO extends SubsystemBase {
   private final DigitalInput m_buttonA = new DigitalInput(0);
   private final DigitalOutput m_yellowLed = new DigitalOutput(3);
-  private Drivetrain m_drivetrain;
+  private OldDrivetrain m_drivetrain;
 
   // DIO 1
   private DigitalInput m_buttonB;
@@ -52,7 +52,7 @@ public class OnBoardIO extends SubsystemBase {
     initializeDios(dio1, dio2);
   }
 
-  public OnBoardIO(ChannelMode dio1, ChannelMode dio2, Drivetrain drivetrain) {
+  public OnBoardIO(ChannelMode dio1, ChannelMode dio2, OldDrivetrain drivetrain) {
     m_drivetrain = drivetrain;
     initializeDios(dio1, dio2);
   }
@@ -71,11 +71,11 @@ public class OnBoardIO extends SubsystemBase {
     }
   }
 
-  public void setDrivetrain(Drivetrain drivetrain) {
+  public void setDrivetrain(OldDrivetrain drivetrain) {
     m_drivetrain = drivetrain;
   }
 
-  public Drivetrain getDrivetrain() {
+  public OldDrivetrain getDrivetrain() {
     return m_drivetrain;
   }
 

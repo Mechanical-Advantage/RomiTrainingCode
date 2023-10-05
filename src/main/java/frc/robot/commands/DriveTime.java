@@ -4,23 +4,24 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.OldDrivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DriveTime extends CommandBase {
   private final double m_duration;
   private final double m_speed;
-  private final Drivetrain m_drive;
+  private final OldDrivetrain m_drive;
   private long m_startTime;
 
   /**
-   * Creates a new DriveTime. This command will drive your robot for a desired speed and time.
+   * Creates a new DriveTime. This command will drive your robot for a desired
+   * speed and time.
    *
    * @param speed The speed which the robot will drive. Negative is in reverse.
-   * @param time How much time to drive in seconds
+   * @param time  How much time to drive in seconds
    * @param drive The drivetrain subsystem on which this command will run
    */
-  public DriveTime(double speed, double time, Drivetrain drive) {
+  public DriveTime(double speed, double time, OldDrivetrain drive) {
     m_speed = speed;
     m_duration = time * 1000;
     m_drive = drive;

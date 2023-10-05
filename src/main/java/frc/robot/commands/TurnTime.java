@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.OldDrivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /*
@@ -14,17 +14,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class TurnTime extends CommandBase {
   private final double m_duration;
   private final double m_rotationalSpeed;
-  private final Drivetrain m_drive;
+  private final OldDrivetrain m_drive;
   private long m_startTime;
 
   /**
    * Creates a new TurnTime.
    *
    * @param speed The speed which the robot will turn. Negative is in reverse.
-   * @param time How much time to turn in seconds
+   * @param time  How much time to turn in seconds
    * @param drive The drive subsystem on which this command will run
    */
-  public TurnTime(double speed, double time, Drivetrain drive) {
+  public TurnTime(double speed, double time, OldDrivetrain drive) {
     m_rotationalSpeed = speed;
     m_duration = time * 1000;
     m_drive = drive;
